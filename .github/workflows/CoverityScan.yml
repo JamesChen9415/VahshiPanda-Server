@@ -1,0 +1,10 @@
+name: Coverity Scan
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
+jobs:
+  upload-to-coverity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ls -al
+      # - run: bats -v
