@@ -10,7 +10,7 @@ jobs:
       - run: tar xzf coverity_tool.tgz
       - run: ls -al
       # - run: ls -al ./cov-analysis-linux64-*/bin/cov-build
-      - run: ./cov-analysis-linux64-*/bin/cov-build --dir ../cov-int --no-command --fs-capture-search ./app
+      - run: ./cov-analysis-linux64-*/bin/cov-build --dir ./cov-int --no-command --fs-capture-search ./app
       - run: tar czvf App_cov_scan.tgz cov-int
       - run: curl --form token=${{ secrets.COVERITY_TOKEN }} \
               --form email=james.chen.9415@gmail.com \
