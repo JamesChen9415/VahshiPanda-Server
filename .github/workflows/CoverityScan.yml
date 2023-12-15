@@ -6,14 +6,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: tar czf App_cov_scan.tgz app
-      - run: wget https://scan.coverity.com/download/linux64 --post-data "token=${{ secrets.COVERITY_TOKEN }}&project=VahshiPanda-Server" -O coverity_tool.tgz
-      - run: tar xzf coverity_tool.tgz
-      - run: ../cov-analysis-linux64-*/bin/cov-build --dir ../cov-int --no-command --fs-capture-search /app
-      - run: tar czvf App_cov_scan.tgz cov-int
-      - run: curl --form token=${{ secrets.COVERITY_TOKEN }} \
-              --form email=james.chen.9415@gmail.com \
-              --form file=@App_cov_scan.tgz \
-              --form version="Version" \
-              --form description="Description" \
-              https://scan.coverity.com/builds?project=VahshiPanda-Server
+      - run: echo "${{ secrets.COVERITY_TOKEN }}"
+      # - run: wget https://scan.coverity.com/download/linux64 --post-data "token=${{ secrets.COVERITY_TOKEN }}&project=VahshiPanda-Server" -O coverity_tool.tgz
+      # - run: tar xzf coverity_tool.tgz
+      # - run: ../cov-analysis-linux64-*/bin/cov-build --dir ../cov-int --no-command --fs-capture-search /app
+      # - run: tar czvf App_cov_scan.tgz cov-int
+      # - run: curl --form token=${{ secrets.COVERITY_TOKEN }} \
+      #         --form email=james.chen.9415@gmail.com \
+      #         --form file=@App_cov_scan.tgz \
+      #         --form version="Version" \
+      #         --form description="Description" \
+      #         https://scan.coverity.com/builds?project=VahshiPanda-Server
