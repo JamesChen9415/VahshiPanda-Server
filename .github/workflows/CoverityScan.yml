@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: tar czf App_cov_scan.tgz
+      - run: tar czf App_cov_scan.tgz app
       - run: curl --form token=${{ secrets.COVERITY_TOKEN}} \
               --form email=james.chen.9415@gmail.com \
               --form file=@App_cov_scan.tgz \
