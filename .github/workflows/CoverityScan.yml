@@ -14,7 +14,8 @@ jobs:
       - run: tar czvf App_cov_scan.tgz cov-int
       - run: curl --form token=${{ secrets.COVERITY_TOKEN }} \
               --form email=james.chen.9415@gmail.com \
+              --form project=VahshiPanda-Server \
               --form file=@App_cov_scan.tgz \
               --form version="Version" \
               --form description="Description" \
-              https://scan.coverity.com/builds?project=VahshiPanda-Server
+              https://scan.coverity.com/builds
