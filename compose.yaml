@@ -1,9 +1,56 @@
+version: '1.0'
 services:
-  web:
+  db:
+    image: postgres:16.1-alpine3.19
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  cache:
+    image: redis:7.2.3-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass redis_pw
+    volumes: 
+      - cache:/data
+
+  api:
+    container_name: vahshipanda-api
     build:
       context: .
+      # target: production
       # args:
+    image: vahshipanda-api
+    depends_on:
+      - db
+      - cache
     ports:
-      - "8080:5000"
+      - 8081:5000
+    environment:
+      NODE_ENV: production
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: postgres
+      REDIS_HOST: cache
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: redis_pw
+    links:
+      - db
+      - cache
     volumes:
       - ./app:/app
+
+volumes:
+  db:
+    driver: local
+  cache:
+    driver: local

@@ -1,9 +1,0 @@
-services:
-  web:
-    build:
-      context: .
-      # args:
-    ports:
-      - "8080:5000"
-    volumes:
-      - ./app:/app
