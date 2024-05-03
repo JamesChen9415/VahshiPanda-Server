@@ -151,7 +151,6 @@ async def get_current_user(
             raise credentials_exception
     except JWTError:
         raise credentials_exception
-    # user = get_user(fake_users_db, username=token_data.username)
     user = crud.get_user_by_username(db, username=username)
     if user is None:
         raise credentials_exception

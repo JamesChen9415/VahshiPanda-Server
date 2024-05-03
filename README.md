@@ -17,7 +17,7 @@ It's a backend code for VahshiPanda App powered by fastapi framework.
     ```bash
     docker compose ps
     ```
-3. browse api doc via http://127.0.0.1:8080/docs
+3. browse api doc via http://vahshipanda-api:8080/docs
 4. reload the backend services:
    ```bash
    uvicorn app:app --reload
@@ -35,18 +35,18 @@ docker compose up -d
 # Test
 1. Test with curl: 
    ```bash
-    curl http://127.0.0.1:8080/api/v1/greet/1
+    curl http://vahshipanda-api:8080/api/v1/greet/1
 
     # obtain token
     curl -X 'POST' \
-    'http://127.0.0.1:8080/token' \
+    'http://vahshipanda-api:8080/token' \
     -H 'accept: application/json' \
     -H 'Content-Type: application/x-www-form-urlencoded' \
     -d 'grant_type=&username=johndoe&password=secret&scope=&client_id=&client_secret='
 
     # interact with server
     curl -X 'GET' \
-    'http://127.0.0.1:8080/users/me' \
+    'http://vahshipanda-api:8080/users/me' \
     -H 'accept: application/json' \
     -H 'Authorization: Bearer johndoe'
 

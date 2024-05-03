@@ -9,19 +9,21 @@ FROM python:3.12-slim-bookworm
 #   gcc \
 #   && apt-get clean
 
+RUN apt-get update -y
+RUN apt-get install curl
+
 
 # upgrade pip
 RUN python -m pip install --upgrade pip
 
 WORKDIR /app
+COPY ./chat .
 
-COPY requirements.txt /tmp
-COPY requirements-dev.txt /tmp
 # RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install -r /tmp/requirements.txt
-RUN pip install -r /tmp/requirements-dev.txt
+RUN pip install -r /app/requirements.txt
+RUN pip install -r /app/requirements-dev.txt
 
-COPY . .
+
 
 ENV PYTHONPATH="${PYTHONPATH}:/app"
 

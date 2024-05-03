@@ -21,10 +21,35 @@ services:
     volumes: 
       - cache:/data
 
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes: 
+      - mongodb:/etc/mongo
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      # mongo-express portal username and password
+      ME_CONFIG_BASICAUTH_USERNAME: root
+      ME_CONFIG_BASICAUTH_PASSWORD: password
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: true
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      #connection to mongodb
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+
   api:
     container_name: vahshipanda-api
     build:
       context: .
+      dockerfile: api.Dockerfile
       # target: production
       # args:
     image: vahshipanda-api
@@ -32,14 +57,13 @@ services:
       - db
       - cache
     ports:
-      - 8081:5000
+      - 9000:5000
     environment:
-      NODE_ENV: production
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: postgres
+      NODE_ENV: model
+      MONGODBDB_HOST: db
+      MONGODBDB_USERNAME: postgres 
+      MONGODBDB_PASSWORD: postgres
+      MONGODBDB_PORT: 5432
       REDIS_HOST: cache
       REDIS_PORT: 6379
       REDIS_PASSWORD: redis_pw
@@ -47,10 +71,46 @@ services:
       - db
       - cache
     volumes:
-      - ./app:/app
+      - ./api:/app
+
+  chat:
+    container_name: vahshipanda-chat
+    build:
+      context: .
+      dockerfile: chat.Dockerfile
+      # target: production
+      # args:
+    image: vahshipanda-chat
+    depends_on:
+      - mongo
+      - cache
+      - api
+    ports:
+      - 9001:5000
+    environment:
+      NODE_ENV: model
+      MONGODBDB_HOST: mongo
+      MONGODBDB_PORT: 27017
+      MONGODBDB_USER: root
+      MONGODBDB_PASSWORD: example
+      API_HOST: vahshipanda-api
+      API_PORT: 5000
+      # DB_NAME: postgres
+      # REDIS_HOST: cache
+      # REDIS_PORT: 6379
+      # REDIS_PASSWORD: redis_pw
+    links:
+      - mongo
+      - cache
+      - api
+    volumes:
+      - ./chat:/app
+
 
 volumes:
   db:
     driver: local
   cache:
+    driver: local
+  mongodb:
     driver: local

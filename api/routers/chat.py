@@ -98,6 +98,7 @@ async def websocket_endpoint(
     await websocket.accept()
     while True:
         data = await websocket.receive_text()
+
         await websocket.send_text(
             f"Session cookie or query token value is: {cookie_or_token}"
         )
