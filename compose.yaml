@@ -34,7 +34,7 @@ services:
     image: mongo-express
     restart: always
     ports:
-      - 8081:8081
+      - 8082:8081
     environment:
       # mongo-express portal username and password
       ME_CONFIG_BASICAUTH_USERNAME: root
@@ -109,8 +109,5 @@ services:
 
 volumes:
   db:
-    driver: local
   cache:
-    driver: local
   mongodb:
-    driver: local
