@@ -10,7 +10,7 @@ FROM python:3.12-slim-bookworm
 #   && apt-get clean
 
 RUN apt-get update -y
-RUN apt-get install curl
+RUN apt-get install curl -y
 
 
 # upgrade pip
