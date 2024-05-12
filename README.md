@@ -5,6 +5,14 @@
 # VahshiPanda-Server
 It's a backend code for VahshiPanda App powered by fastapi framework.
 
+# required ports:
+5432 -- postgres
+6379 -- redis
+8082 -- mongo-express
+9000 -- vahshipanda-api
+9001 -- vahshipanda-chat
+
+
 
 # Usage
 
